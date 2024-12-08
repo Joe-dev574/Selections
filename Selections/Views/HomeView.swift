@@ -12,6 +12,13 @@ struct HomeView: View {
     @State var active: Int = 53
     @State var idle: Int = 8
     
+    var mockActivities = [
+        Activity(id: 0, title: "Workout", subtitle: "HIIT Training", image: "figure.highintensity.intervaltraining", tintColor: .blue, amount: "1.25 hours"),
+        Activity(id: 1, title: "Workout", subtitle: "HIIT Training", image: "figure.highintensity.intervaltraining", tintColor: .blue, amount: "1.25 hours"),
+        Activity(id: 2, title: "Workout", subtitle: "HIIT Training", image: "figure.highintensity.intervaltraining", tintColor: .blue, amount: "1.25 hours"),
+        Activity(id: 3, title: "Workout", subtitle: "HIIT Training", image: "figure.highintensity.intervaltraining", tintColor: .blue, amount: "1.25 hours"),
+        Activity(id: 4, title: "Workout", subtitle: "HIIT Training", image: "figure.highintensity.intervaltraining", tintColor: .blue, amount: "1.25 hours")
+    ]
    
    
     var body: some View {
@@ -54,7 +61,7 @@ struct HomeView: View {
                     Spacer( )
                     
                     ZStack{
-                        ProgressCircleView(progress: $calories, color: .red, goal: 100)
+                        ProgressCircleView(progress: $calories, color: .red, goal: 600)
                           
                         ProgressCircleView(progress: $active, color: .green, goal: 60)
                             .padding(.all, 20)
@@ -66,10 +73,39 @@ struct HomeView: View {
                      Spacer( )
                 }
                 .padding()
+                
+                HStack{
+                    Text("Fitness Activity")
+                        .font(.title2)
+                    Spacer()
+                    
+                    Button{
+                        print("show more")
+                    } label: {
+                        Text("Show More")
+                            .padding()
+                            .foregroundStyle(.white)
+                            .fontWeight(.bold)
+                            .background(Color.blue.gradient)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                }
+                .padding(.horizontal)
+                
+                LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)){
+                    ForEach(mockActivities, id: \.id) { activity in
+                        ActivityCardView(activity: activity)
+                          
+                    }
+                    .padding(.horizontal, 4)
+                 
+                }
+                    
+                }
                 }
             }
         }
-}
+
 #Preview {
     HomeView()
 }
